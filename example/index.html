@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado Pago - Pix</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body class="d-flex mx-auto justify-content-md-center align-items-center">
+    <div class="d-grid mt-5">
+        <form class="d-grid mx-auto" id="form-checkout" action="http://localhost:3008/payment/process" method="post">
+          <div class="mb-3">
+            <label for="payerFirstName" class="form-label">Nome</label>
+            <input id="form-checkout__payerFirstName" name="payerFirstName" type="text" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="payerLastName" class="form-label">Sobrenome</label>
+            <input id="form-checkout__payerLastName" name="payerLastName" type="text" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">E-mail</label>
+            <input id="form-checkout__email" name="email" type="text" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="identificationType" class="form-label">Tipo de documento</label>
+            <select id="form-checkout__identificationType" name="identificationType" class="form-select"></select>
+          </div>
+          <div class="mb-3">
+            <label for="identificationNumber" class="form-label">Número do documento</label>
+            <input id="form-checkout__identificationNumber" name="identificationNumber" type="text" class="form-control">
+          </div>
+    
+          <div class="mb-3">
+            <input type="hidden" name="transactionAmount" id="transactionAmount" value="100">
+            <input type="hidden" name="description" id="description" value="Nome do Produto">
+          </div>
+    
+            <button type="submit" class="btn  btn-primary">Pagar</button>
+        </form>
+      </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <script>
+        const mp = new MercadoPago("TEST-ce111f59-8ae7-4551-9cd5-77cb459a4952");
+
+    (async function getIdentificationTypes() {
+        try {
+          const identificationTypes = await mp.getIdentificationTypes();
+          const identificationTypeElement = document.getElementById('form-checkout__identificationType');
+  
+          createSelectOptions(identificationTypeElement, identificationTypes);
+        } catch (e) {
+          return console.error('Error getting identificationTypes: ', e);
+        }
+      })();
+  
+      function createSelectOptions(elem, options, labelsAndKeys = { label: "name", value: "id" }) {
+        const { label, value } = labelsAndKeys;
+  
+        elem.options.length = 0;
+  
+        const tempOptions = document.createDocumentFragment();
+  
+        options.forEach(option => {
+          const optValue = option[value];
+          const optLabel = option[label];
+  
+          const opt = document.createElement('option');
+          opt.value = optValue;
+          opt.textContent = optLabel;
+  
+          tempOptions.appendChild(opt);
+        });
+  
+        elem.appendChild(tempOptions);
+      }
+  
+    </script>
+</body>
+</html>
