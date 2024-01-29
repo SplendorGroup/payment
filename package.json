@@ -79,14 +79,16 @@
     },
     "coveragePathIgnorePatterns": [
       "<rootDir>/@types/",
-      "<rootDir>/adapters/",
+      "<rootDir>/adapters/controllers/",
+      "<rootDir>/adapters/repositories/",
       "<rootDir>/core/",
       "<rootDir>/application/dtos/",
       "<rootDir>/main.ts"
     ],
     "testPathIgnorePatterns": [
       "<rootDir>/@types/",
-      "<rootDir>/adapters/",
+      "<rootDir>/adapters/repositories/",
+      "<rootDir>/adapters/controllers/",
       "<rootDir>/core/",
       "<rootDir>/application/dtos/"
     ],

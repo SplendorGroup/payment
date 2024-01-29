@@ -6,7 +6,11 @@ export class MercadoPagoProvider implements PaymentContract {
   protected client = new MercadoPagoConfig({
     accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
   });
-  protected payment = new Payment(this.client);
+  protected _payment = new Payment(this.client);
+
+  get payment(): Payment {
+    return this._payment;
+  }
 
   async process(body: Payment.ProcessRequest) {
     try {
