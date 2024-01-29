@@ -36,7 +36,7 @@ export class ProcessPaymentUseCase {
     await this.item.createMany(products);
 
     const descriptions = products.flatMap(({ product, quantity, price }) => {
-      const money = PaymentValuesObject.Money(price)
+      const money = PaymentValuesObject.Money(price);
       return `${product} (x${quantity}) - ${money}`;
     });
 

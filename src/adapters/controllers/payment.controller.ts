@@ -10,7 +10,7 @@ export class PaymentController {
     private readonly processPaymentUseCase: ProcessPaymentUseCase,
     private readonly getStatusPaymentUseCase: GetStatusPaymentUseCase,
     private readonly viewPaymentUseCase: ViewPaymentUseCase,
-    ) {}
+  ) {}
 
   @Post('process')
   async process(@Req() _request, @Body() body: PaymentProcessDTO) {

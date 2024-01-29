@@ -13,11 +13,14 @@ export class ViewPaymentUseCase {
   ) {}
 
   async execute(id: string) {
-    const { payment_id, items } = await this.order.findByIdWithRelations(id, ['items'])
+    const { payment_id, items } = await this.order.findByIdWithRelations(id, [
+      'items',
+    ]);
 
-    const payment = await this.payment.getTransaction(payment_id) as Payment.ProcessResponse;
+    const payment = (await this.payment.getTransaction(
+      payment_id,
+    )) as Payment.ProcessResponse;
 
-    return PaymentMapper.ViewResponse({ ...payment, order_id: id, items })
+    return PaymentMapper.ViewResponse({ ...payment, order_id: id, items });
   }
-
 }

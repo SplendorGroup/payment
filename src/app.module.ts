@@ -11,9 +11,9 @@ import { ViewPaymentUseCase } from './application/usecases/view-payment.usecase'
   imports: [CoreModule, ProvidersModule, RepositoryModule],
   controllers: [PaymentController],
   providers: [
-    ProcessPaymentUseCase, 
-    GetStatusPaymentUseCase, 
-    ViewPaymentUseCase
+    ProcessPaymentUseCase,
+    GetStatusPaymentUseCase,
+    ViewPaymentUseCase,
   ],
 })
 export class AppModule {}

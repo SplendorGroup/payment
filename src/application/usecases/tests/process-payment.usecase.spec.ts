@@ -1,4 +1,3 @@
-
 import { IPrisma } from '@/domain/contracts/prisma.contract';
 import { PaymentContract } from '@/domain/contracts/payment.contract';
 
@@ -79,7 +78,8 @@ describe('ProcessPaymentUseCase', () => {
         payment_method: { id: 'sample_payment_method_id' },
         status: 'APPROVED',
         currency_id: 'USD',
-        description: 'Payment for Product1 (x2) - $30.00|Product2 (x1) - $20.00',
+        description:
+          'Payment for Product1 (x2) - $30.00|Product2 (x1) - $20.00',
         transaction_amount: 100.0,
         point_of_interaction: {
           transaction_data: {
@@ -107,7 +107,8 @@ describe('ProcessPaymentUseCase', () => {
         payment_method: 'sample_payment_method_id',
         status: 'APPROVED',
         currency: 'USD',
-        description: 'Payment for Product1 (x2) - $30.00|Product2 (x1) - $20.00',
+        description:
+          'Payment for Product1 (x2) - $30.00|Product2 (x1) - $20.00',
         items: [
           { product: 'Product1', quantity: 2, price: 30.0 },
           { product: 'Product2', quantity: 1, price: 20.0 },
@@ -119,7 +120,6 @@ describe('ProcessPaymentUseCase', () => {
     });
 
     it('should handle errors and return appropriate response', async () => {
-
       const paymentProcessData: PaymentProcessDTO = {
         payerFirstName: 'John',
         payerLastName: 'Doe',
@@ -132,9 +132,13 @@ describe('ProcessPaymentUseCase', () => {
         ],
       };
 
-      mockOrderPrisma.create.mockRejectedValue(new Error('Order creation failed'));
+      mockOrderPrisma.create.mockRejectedValue(
+        new Error('Order creation failed'),
+      );
 
-      await expect(processPaymentUseCase.execute(paymentProcessData)).rejects.toThrow("Order creation failed");
+      await expect(
+        processPaymentUseCase.execute(paymentProcessData),
+      ).rejects.toThrow('Order creation failed');
     });
   });
 });

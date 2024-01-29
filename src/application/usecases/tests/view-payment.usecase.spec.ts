@@ -12,7 +12,10 @@ describe('ViewPaymentUseCase', () => {
     mockOrderPrisma = mock<IPrisma<'order'>>();
     mockPaymentContract = mock<PaymentContract>();
 
-    viewPaymentUseCase = new ViewPaymentUseCase(mockOrderPrisma, mockPaymentContract);
+    viewPaymentUseCase = new ViewPaymentUseCase(
+      mockOrderPrisma,
+      mockPaymentContract,
+    );
   });
 
   describe('execute', () => {
@@ -50,13 +53,14 @@ describe('ViewPaymentUseCase', () => {
       mockPaymentContract.getTransaction.mockResolvedValue({
         id: 123, // Replace with the appropriate mock data
         payment_method: 'sample_payment_method_id',
-        status: "APPROVED",
-        currency: "USD",
+        status: 'APPROVED',
+        currency: 'USD',
         date_created: new Date('2024-01-28T12:00:00Z'),
         date_approved: new Date('2024-01-28T14:30:00Z'),
         date_last_updated: new Date('2024-01-28T15:00:00Z'),
         date_of_expiration: new Date('2024-02-28T23:59:59Z'),
-        description: "Payment for Product1 (x2) - $30.00|Product2 (x1) - $20.00",
+        description:
+          'Payment for Product1 (x2) - $30.00|Product2 (x1) - $20.00',
         // ... other properties as needed
 
         point_of_interaction: {
@@ -123,7 +127,8 @@ describe('ViewPaymentUseCase', () => {
         date_last_updated: new Date('2024-01-28T15:00:00Z'),
         date_of_expiration: new Date('2024-02-28T23:59:59Z'),
         status: 'APPROVED',
-        description: 'Payment for Product1 (x2) - $30.00|Product2 (x1) - $20.00',
+        description:
+          'Payment for Product1 (x2) - $30.00|Product2 (x1) - $20.00',
         items: [
           { product: 'Product1', quantity: 2, price: 30.0 },
           { product: 'Product2', quantity: 1, price: 20.0 },
@@ -137,7 +142,9 @@ describe('ViewPaymentUseCase', () => {
     it('should handle error if order is not found', async () => {
       const orderId = 'nonexistent_order_id';
 
-      mockOrderPrisma.findByIdWithRelations.mockRejectedValue(new Error(`Order with ID ${orderId} not found.`));
+      mockOrderPrisma.findByIdWithRelations.mockRejectedValue(
+        new Error(`Order with ID ${orderId} not found.`),
+      );
 
       await expect(viewPaymentUseCase.execute(orderId)).rejects.toThrow(
         `Order with ID ${orderId} not found.`,
@@ -154,7 +161,9 @@ describe('ViewPaymentUseCase', () => {
         items: [],
       });
 
-      mockPaymentContract.getTransaction.mockRejectedValue(new Error(`Payment details not found for order with ID ${orderId}.`));
+      mockPaymentContract.getTransaction.mockRejectedValue(
+        new Error(`Payment details not found for order with ID ${orderId}.`),
+      );
 
       await expect(viewPaymentUseCase.execute(orderId)).rejects.toThrow(
         `Payment details not found for order with ID ${orderId}.`,

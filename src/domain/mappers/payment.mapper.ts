@@ -1,4 +1,4 @@
-import { PaymentValuesObject } from "../values-object/payment.values-object";
+import { PaymentValuesObject } from '../values-object/payment.values-object';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 export class PaymentMapper {
@@ -104,19 +104,16 @@ export class PaymentMapper {
     };
   }
 
-  static GetStatusResponse (
+  static GetStatusResponse(
     data: Payment.ProcessResponse & {
       order_id: string;
     },
   ) {
-    const {
-      order_id,
-      status,
-    } = data as any;
+    const { order_id, status } = data as any;
 
     return {
-        order_id,
-        status
+      order_id,
+      status,
     };
   }
 }

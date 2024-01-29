@@ -36,10 +36,10 @@ export class MercadoPagoProvider implements PaymentContract {
   }
 
   async getTransaction(id) {
-      try {
-        return await this.payment.get({ id })
-      } catch (error) {
-        throw new InternalServerErrorException(error.message);
-      }
+    try {
+      return await this.payment.get({ id });
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
   }
 }

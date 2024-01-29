@@ -173,19 +173,12 @@ export class PrismaRepository implements IPrismaRepository {
       const { skip, take, ...where } = filter || {};
       const includeRelations = this.mapRelations(relations);
 
-      if (skip !== undefined && take !== undefined) {
-        const allRecords = await this.model.findFirst({
-          where,
-          include: includeRelations,
-        });
-        return allRecords;
-      } else {
-        const allRecords = await this.model.findFirst({
-          where,
-          include: includeRelations,
-        });
-        return allRecords;
-      }
+      const allRecords = await this.model.findFirst({
+        where,
+        include: includeRelations,
+      });
+
+      return allRecords;
     } catch (error) {
       return [];
     }

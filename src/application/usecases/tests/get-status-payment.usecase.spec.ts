@@ -12,7 +12,10 @@ describe('GetStatusPaymentUseCase', () => {
     mockOrderPrisma = mock<IPrisma<'order'>>();
     mockPaymentContract = mock<PaymentContract>();
 
-    getStatusPaymentUseCase = new GetStatusPaymentUseCase(mockOrderPrisma, mockPaymentContract);
+    getStatusPaymentUseCase = new GetStatusPaymentUseCase(
+      mockOrderPrisma,
+      mockPaymentContract,
+    );
   });
 
   describe('execute', () => {
@@ -45,7 +48,9 @@ describe('GetStatusPaymentUseCase', () => {
 
       mockOrderPrisma.findByIdWithRelations.mockResolvedValue(null);
 
-      await expect(getStatusPaymentUseCase.execute(orderId)).rejects.toThrow(/* expected error response */);
+      await expect(
+        getStatusPaymentUseCase.execute(orderId),
+      ).rejects.toThrow(/* expected error response */);
     });
 
     it('should handle error if payment status is not found', async () => {
@@ -57,9 +62,13 @@ describe('GetStatusPaymentUseCase', () => {
         items: [],
       });
 
-      mockPaymentContract.getTransaction.mockRejectedValue(new Error("payment status is not found"));
+      mockPaymentContract.getTransaction.mockRejectedValue(
+        new Error('payment status is not found'),
+      );
 
-      await expect(getStatusPaymentUseCase.execute(orderId)).rejects.toThrow("payment status is not found");
+      await expect(getStatusPaymentUseCase.execute(orderId)).rejects.toThrow(
+        'payment status is not found',
+      );
     });
   });
 });

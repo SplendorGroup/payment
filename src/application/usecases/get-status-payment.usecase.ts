@@ -13,11 +13,14 @@ export class GetStatusPaymentUseCase {
   ) {}
 
   async execute(id: string) {
-    const { payment_id } = await this.order.findByIdWithRelations(id, ['items'])
+    const { payment_id } = await this.order.findByIdWithRelations(id, [
+      'items',
+    ]);
 
-    const payment = await this.payment.getTransaction(payment_id) as Payment.ProcessResponse;
+    const payment = (await this.payment.getTransaction(
+      payment_id,
+    )) as Payment.ProcessResponse;
 
-    return PaymentMapper.GetStatusResponse({ ...payment, order_id: id })
+    return PaymentMapper.GetStatusResponse({ ...payment, order_id: id });
   }
-
 }
