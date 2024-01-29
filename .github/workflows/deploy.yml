@@ -44,8 +44,8 @@ jobs:
             name: payment-env
           type: Opaque
           data:
-            DATABASE_URL: $(echo -n ${{secrets.MONGO_URI}} | base64)
-            MERCADOPAGO_ACCESS_TOKEN: $(echo -n ${{ secrets.MERCADOPAGO_ACCESS_TOKEN }} | base64)" > ./kubernetes/secret.yml
+            DATABASE_URL: \$(echo -n \${{ secrets.MONGO_URI }} | base64)
+            MERCADOPAGO_ACCESS_TOKEN: \$(echo -n \${{ secrets.MERCADOPAGO_ACCESS_TOKEN }} | base64)" > ./kubernetes/secret.yml
       
       - name: Deploy to Kubernetes
         run: |
