@@ -2,7 +2,7 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-COPY --chown=node:node . .
+COPY --chown=node:node --chmod=644 . .
 
 USER node
 
