@@ -2,9 +2,7 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-COPY --chown=node:node --chmod=644 . .
-
-USER node
+COPY --chown=root:root --chmod=644 . .
 
 RUN npm install --force
 
