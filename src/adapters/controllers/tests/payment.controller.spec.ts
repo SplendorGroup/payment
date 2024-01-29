@@ -82,7 +82,9 @@ describe('PaymentController', () => {
       const mockError = new Error('Mock error');
       jest.spyOn(processPaymentUseCase, 'execute').mockRejectedValue(mockError);
 
-      await expect(paymentController.process(null, {} as any)).rejects.toThrowError(
+      await expect(
+        paymentController.process(null, {} as any),
+      ).rejects.toThrowError(
         new InternalServerErrorException(mockError.message),
       );
     });
@@ -98,7 +100,7 @@ describe('PaymentController', () => {
     });
 
     it('should return the result from getStatusPaymentUseCase', async () => {
-      const expectedResult = { status: 'success'} as any;
+      const expectedResult = { status: 'success' } as any;
       jest
         .spyOn(getStatusPaymentUseCase, 'execute')
         .mockResolvedValue(expectedResult);
@@ -110,9 +112,13 @@ describe('PaymentController', () => {
 
     it('should throw InternalServerErrorException if an error occurs during status retrieval', async () => {
       const mockError = new Error('Mock error');
-      jest.spyOn(getStatusPaymentUseCase, 'execute').mockRejectedValue(mockError);
+      jest
+        .spyOn(getStatusPaymentUseCase, 'execute')
+        .mockRejectedValue(mockError);
 
-      await expect(paymentController.getStatus(null, 'mockId')).rejects.toThrowError(
+      await expect(
+        paymentController.getStatus(null, 'mockId'),
+      ).rejects.toThrowError(
         new InternalServerErrorException(mockError.message),
       );
     });
@@ -129,7 +135,9 @@ describe('PaymentController', () => {
 
     it('should return the result from viewPaymentUseCase', async () => {
       const expectedResult = { id: 'mockId', status: 'success' } as any;
-      jest.spyOn(viewPaymentUseCase, 'execute').mockResolvedValue(expectedResult);
+      jest
+        .spyOn(viewPaymentUseCase, 'execute')
+        .mockResolvedValue(expectedResult);
 
       const result = await paymentController.getPayment(null, 'mockId');
 
@@ -140,7 +148,9 @@ describe('PaymentController', () => {
       const mockError = new Error('Mock error');
       jest.spyOn(viewPaymentUseCase, 'execute').mockRejectedValue(mockError);
 
-      await expect(paymentController.getPayment(null, 'mockId')).rejects.toThrowError(
+      await expect(
+        paymentController.getPayment(null, 'mockId'),
+      ).rejects.toThrowError(
         new InternalServerErrorException(mockError.message),
       );
     });

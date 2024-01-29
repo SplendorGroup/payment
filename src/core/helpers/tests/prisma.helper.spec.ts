@@ -1,4 +1,4 @@
-import { PrismaHelper } from "../prisma.helper";
+import { PrismaHelper } from '../prisma.helper';
 
 describe('PrismaHelper', () => {
   let prismaHelper: PrismaHelper;

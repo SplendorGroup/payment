@@ -1,5 +1,4 @@
-import { PaymentValuesObject } from "../payment.values-object";
-
+import { PaymentValuesObject } from '../payment.values-object';
 
 describe('PaymentValuesObject', () => {
   describe('Money', () => {

@@ -1,5 +1,5 @@
-import { PaymentValuesObject } from "../../../domain/values-object/payment.values-object";
-import { PaymentMapper } from "../payment.mapper";
+import { PaymentValuesObject } from '../../../domain/values-object/payment.values-object';
+import { PaymentMapper } from '../payment.mapper';
 
 describe('PaymentMapper', () => {
   describe('ProcessResponse', () => {
@@ -165,7 +165,7 @@ describe('PaymentMapper', () => {
         },
       };
 
-      const result = PaymentMapper.ViewResponse(testData as any);
+      const result = PaymentMapper.ProcessResponse(testData as any);
 
       expect(result).toEqual({
         id: '123',
@@ -225,7 +225,7 @@ describe('PaymentMapper', () => {
         },
       } as any;
 
-      const result = PaymentMapper.ViewResponse(testData);
+      const result = PaymentMapper.ProcessResponse(testData);
 
       expect(result).toEqual({
         id: null,

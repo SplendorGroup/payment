@@ -26,7 +26,7 @@ describe('MercadoPagoProvider', () => {
       mockPayment.create.mockResolvedValue(mockResponse);
 
       const requestBody: Payment.ProcessRequest = {
-        transactionAmount: 100.00,
+        transactionAmount: 100.0,
         token: 'mockToken',
         description: 'Test Payment',
         email: 'test@example.com',
@@ -46,7 +46,7 @@ describe('MercadoPagoProvider', () => {
       mockPayment.create.mockRejectedValue(mockError);
 
       const requestBody: Payment.ProcessRequest = {
-        transactionAmount: 100.00, 
+        transactionAmount: 100.0,
         token: 'mockToken',
         description: 'Test Payment',
         email: 'test@example.com',
@@ -56,8 +56,10 @@ describe('MercadoPagoProvider', () => {
         identificationNumber: '12345678901',
       };
 
-      await expect(mercadoPagoProvider.process(requestBody)).rejects.toThrowError(
-        new InternalServerErrorException(mockError.message)
+      await expect(
+        mercadoPagoProvider.process(requestBody),
+      ).rejects.toThrowError(
+        new InternalServerErrorException(mockError.message),
       );
     });
   });
@@ -69,7 +71,8 @@ describe('MercadoPagoProvider', () => {
       } as any;
       mockPayment.get.mockResolvedValue(mockResponse);
 
-      const result = await mercadoPagoProvider.getTransaction('mockTransactionId');
+      const result =
+        await mercadoPagoProvider.getTransaction('mockTransactionId');
 
       expect(result).toEqual(mockResponse);
     });
@@ -78,9 +81,11 @@ describe('MercadoPagoProvider', () => {
       const mockError = new Error('Mock retrieval error');
       mockPayment.get.mockRejectedValue(mockError);
 
-      await expect(mercadoPagoProvider.getTransaction('mockTransactionId')).rejects.toThrowError(
-        new InternalServerErrorException(mockError.message)
+      await expect(
+        mercadoPagoProvider.getTransaction('mockTransactionId'),
+      ).rejects.toThrowError(
+        new InternalServerErrorException(mockError.message),
       );
     });
-  })
+  });
 });

@@ -48,8 +48,7 @@ describe('PaymentProcessDTO', () => {
     });
 
     it('should not validate an invalid PaymentProcessDTO object with missing required fields', async () => {
-      const invalidData = {
-      };
+      const invalidData = {};
 
       const paymentProcessDTO = plainToClass(PaymentProcessDTO, invalidData);
       const errors = await validate(paymentProcessDTO);
@@ -83,8 +82,8 @@ describe('PaymentProcessDTO', () => {
 
       const paymentProcessDTO = plainToClass(PaymentProcessDTO, invalidData);
 
-    const error =await validate(paymentProcessDTO);
-    expect(error).not.toHaveLength(0)
+      const error = await validate(paymentProcessDTO);
+      expect(error).not.toHaveLength(0);
     });
   });
 });

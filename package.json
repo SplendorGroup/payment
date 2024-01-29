@@ -79,13 +79,11 @@
     },
     "coveragePathIgnorePatterns": [
       "<rootDir>/@types/",
-      "<rootDir>/core/filter/",
       "<rootDir>/adapters/repositories/",
       "<rootDir>/main.ts"
     ],
     "testPathIgnorePatterns": [
       "<rootDir>/@types/",
-      "<rootDir>/core/filter/",
       "<rootDir>/adapters/repositories/"
     ],
     "collectCoverageFrom": [

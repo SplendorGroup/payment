@@ -21,6 +21,6 @@ export class ViewPaymentUseCase {
       payment_id,
     )) as Payment.ProcessResponse;
 
-    return PaymentMapper.ViewResponse({ ...payment, order_id: id, items });
+    return PaymentMapper.ProcessResponse({ ...payment, order_id: id, items });
   }
 }

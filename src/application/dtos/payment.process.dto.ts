@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsCPFOrCNPJ } from 'brazilian-class-validator';
-import { isCPFOrCNPJ } from 'brazilian-values';
 import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
