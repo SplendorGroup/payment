@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1706515120887" clover="3.2.0">
-  <project timestamp="1706515120887" name="All files">
+<coverage generated="1706515600753" clover="3.2.0">
+  <project timestamp="1706515600753" name="All files">
     <metrics statements="38" coveredstatements="38" conditionals="0" coveredconditionals="0" methods="9" coveredmethods="9" elements="47" coveredelements="47" complexity="0" loc="38" ncloc="38" packages="1" files="3" classes="3"/>
     <file name="get-status-payment.usecase.ts" path="A:\Github\fiap-payment\src\application\usecases\get-status-payment.usecase.ts">
       <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>

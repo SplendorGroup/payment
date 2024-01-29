@@ -1,6 +1,5 @@
 import { PaymentValuesObject } from '../values-object/payment.values-object';
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
 export class PaymentMapper {
   static ProcessResponse(
     data: Payment.ProcessResponse & {
@@ -29,7 +28,7 @@ export class PaymentMapper {
       point_of_interaction: {
         transaction_data: { qr_code, qr_code_base64, ticket_url },
       },
-    } = data as any;
+    } = data;
     const producs = items.flatMap((item) => {
       delete item.order_id;
       return item;
@@ -80,9 +79,9 @@ export class PaymentMapper {
       point_of_interaction: {
         transaction_data: { qr_code, qr_code_base64, ticket_url },
       },
-    } = data as any;
-    const producs = Array.from(items ?? []).flatMap((item: any) => {
-      delete item.order_id;
+    } = data;
+    const producs = items.flatMap((item) => {
+      delete item.order_id
       return item;
     });
     return {
