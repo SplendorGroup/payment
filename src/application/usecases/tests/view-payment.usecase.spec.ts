@@ -2,6 +2,7 @@ import { IPrisma } from '@/domain/contracts/prisma.contract';
 import { PaymentContract } from '@/domain/contracts/payment.contract';
 import { MockProxy, mock } from 'jest-mock-extended';
 import { ViewPaymentUseCase } from '../view-payment.usecase';
+import { PaymentMapper } from '../../../domain/mappers/payment.mapper';
 
 describe('ViewPaymentUseCase', () => {
   let viewPaymentUseCase: ViewPaymentUseCase;

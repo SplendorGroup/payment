@@ -81,7 +81,7 @@ export class PaymentMapper {
       },
     } = data;
     const producs = items.flatMap((item) => {
-      delete item.order_id
+      delete item.order_id;
       return item;
     });
     return {
