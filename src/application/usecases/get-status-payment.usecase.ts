@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IPrisma } from '@/domain/contracts/prisma.contract';
 import { PaymentContract } from '@/domain/contracts/payment.contract';
-import { PaymentMapper } from '@/domain/mappers/payment.mapper';
+import { PaymentMapper } from '../../domain/mappers/payment.mapper';
 
 @Injectable()
 export class GetStatusPaymentUseCase {

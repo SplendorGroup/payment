@@ -29,7 +29,7 @@ export class PaymentMapper {
       point_of_interaction: {
         transaction_data: { qr_code, qr_code_base64, ticket_url },
       },
-    } = data;
+    } = data as any;
     const producs = items.flatMap((item) => {
       delete item.order_id;
       return item;
@@ -80,8 +80,8 @@ export class PaymentMapper {
       point_of_interaction: {
         transaction_data: { qr_code, qr_code_base64, ticket_url },
       },
-    } = data;
-    const producs = items.flatMap((item) => {
+    } = data as any;
+    const producs = Array.from(items ?? []).flatMap((item: any) => {
       delete item.order_id;
       return item;
     });
@@ -112,7 +112,7 @@ export class PaymentMapper {
     const {
       order_id,
       status,
-    } = data;
+    } = data as any;
 
     return {
         order_id,

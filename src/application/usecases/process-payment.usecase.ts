@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import { PaymentProcessDTO } from '../dtos/payment.process.dto';
 import { IPrisma } from '@/domain/contracts/prisma.contract';
 import { PaymentContract } from '@/domain/contracts/payment.contract';
-import { PaymentMapper } from '@/domain/mappers/payment.mapper';
-import { PaymentValuesObject } from '@/domain/values-object/payment.values-object';
+import { PaymentMapper } from '../../domain/mappers/payment.mapper';
+import { PaymentValuesObject } from '../../domain/values-object/payment.values-object';
 
 @Injectable()
 export class ProcessPaymentUseCase {
@@ -49,7 +49,7 @@ export class ProcessPaymentUseCase {
       token: order.id,
     })) as Payment.ProcessResponse;
 
-    await this.order.update(order.id, { payment_id: String(payment?.id) });
+    await this.order.update(order.id, { payment_id: String(payment.id) });
     return PaymentMapper.ProcessResponse({
       ...payment,
       order_id: order.id,
