@@ -36,19 +36,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y kubectl
 
-      - name: Create Secrets
-        run: |
-          cat <<EOF >>./kubernetes/secret.yml
-          apiVersion: v1
-          kind: Secret
-          metadata:
-            name: payment-env
-          type: Opaque
-          data:
-            DATABASE_URL: $(echo -n "${{ secrets.MONGO_URI }}" | base64)
-            MERCADOPAGO_ACCESS_TOKEN: $(echo -n "${{ secrets.MERCADOPAGO_ACCESS_TOKEN }}" | base64)
-          EOF
-          
       - name: Deploy to Kubernetes
         run: |
           aws eks update-kubeconfig --name ${{ secrets.KUBERNETES_CLUSTER_NAME }}
