@@ -1,3 +1,5 @@
+[![Deploy CD](https://github.com/fiap-lanchonete/fiap-payment/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/fiap-lanchonete/fiap-payment/actions/workflows/deploy.yml)
+
 # Tech Challenge - Pós-Tech SOAT - FIAP
 
 Alunos:
