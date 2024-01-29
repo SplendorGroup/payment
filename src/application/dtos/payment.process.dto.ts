@@ -11,7 +11,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { IdentificationType } from '@/enum/identification-type.enum';
+import { IdentificationType } from '../../domain/enum/identification-type.enum';
 
 class Item {
   product: string;
@@ -44,11 +44,10 @@ export class PaymentProcessDTO {
     const document = String(value)
       .split(/[^a-zA-Z0-9]/)
       .join('');
-    if (!isCPFOrCNPJ(document)) throw new Error('Documento é inválido.');
     return String(document);
   })
   @ApiProperty()
-  @IsCPFOrCNPJ()
+  @IsCPFOrCNPJ({ message: 'Documento é inválido.' })
   identificationNumber: string;
 
   @ApiProperty()

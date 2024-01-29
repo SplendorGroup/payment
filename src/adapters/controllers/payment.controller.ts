@@ -1,7 +1,7 @@
-import { PaymentProcessDTO } from '@/application/dtos/payment.process.dto';
-import { GetStatusPaymentUseCase } from '@/application/usecases/get-status-payment.usecase';
-import { ProcessPaymentUseCase } from '@/application/usecases/process-payment.usecase';
-import { ViewPaymentUseCase } from '@/application/usecases/view-payment.usecase';
+import { PaymentProcessDTO } from '../../application/dtos/payment.process.dto';
+import { GetStatusPaymentUseCase } from '../../application/usecases/get-status-payment.usecase';
+import { ProcessPaymentUseCase } from '../../application/usecases/process-payment.usecase';
+import { ViewPaymentUseCase } from '../../application/usecases/view-payment.usecase';
 import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
 
 @Controller('payment')

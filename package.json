@@ -79,24 +79,18 @@
     },
     "coveragePathIgnorePatterns": [
       "<rootDir>/@types/",
-      "<rootDir>/adapters/controllers/",
+      "<rootDir>/core/filter/",
       "<rootDir>/adapters/repositories/",
-      "<rootDir>/core/",
-      "<rootDir>/application/dtos/",
       "<rootDir>/main.ts"
     ],
     "testPathIgnorePatterns": [
       "<rootDir>/@types/",
-      "<rootDir>/adapters/repositories/",
-      "<rootDir>/adapters/controllers/",
-      "<rootDir>/core/",
-      "<rootDir>/application/dtos/"
+      "<rootDir>/core/filter/",
+      "<rootDir>/adapters/repositories/"
     ],
     "collectCoverageFrom": [
       "**/*.(t|j)s",
       "!**/*.module.(t|j)s",
-      "!**/src/adapters/**",
-      "!**/src/core/**",
       "!**/src/main.ts"
     ],
     "coverageDirectory": "../coverage",

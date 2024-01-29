@@ -44,7 +44,6 @@ export class ExceptionFilterHttp implements ExceptionFilter {
               statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
               timestamp: new Date().getTime(),
               message: exception.message,
-              path: request.path,
             },
           };
     return this.httpAdapter.reply(response, body, status);
