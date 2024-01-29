@@ -3,12 +3,11 @@ import {
   BadRequestException,
   Catch,
   ExceptionFilter,
-  HttpException,
   HttpStatus,
   Logger,
 } from '@nestjs/common';
 import { AbstractHttpAdapter, HttpAdapterHost } from '@nestjs/core';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 
 @Catch()
 export class ExceptionFilterHttp implements ExceptionFilter {
