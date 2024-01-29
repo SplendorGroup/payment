@@ -72,16 +72,32 @@
       "json",
       "ts"
     ],
-    "rootDir": "src/application/usecases/",
+    "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/@types/",
+      "<rootDir>/adapters/",
+      "<rootDir>/core/",
+      "<rootDir>/application/dtos/",
+      "<rootDir>/main.ts"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/@types/",
+      "<rootDir>/adapters/",
+      "<rootDir>/core/",
+      "<rootDir>/application/dtos/"
+    ],
     "collectCoverageFrom": [
       "**/*.(t|j)s",
-      "!**/*.module.(t|j)s"
+      "!**/*.module.(t|j)s",
+      "!**/src/adapters/**",
+      "!**/src/core/**",
+      "!**/src/main.ts"
     ],
-    "coverageDirectory": "../../../coverage",
+    "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   }
 }
