@@ -1,12 +1,17 @@
 FROM node:20-alpine
 
+RUN addgroup -S nonroot \
+    && adduser -S nonroot -G nonroot
+
+USER nonroot
+
 WORKDIR /app
 
 COPY --chown=root:root --chmod=644 ./src /src
 COPY --chown=root:root --chmod=644 ./prisma /prisma
 COPY --chown=root:root --chmod=644 ./package.json /package.json
 
-RUN npm install --force
+RUN npm install --ignore-scripts --force
 
 RUN npm prune --production
 
