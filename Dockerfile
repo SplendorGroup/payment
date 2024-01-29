@@ -2,7 +2,9 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-COPY --chown=root:root --chmod=644 . .
+COPY --chown=root:root --chmod=644 ./src /src
+COPY --chown=root:root --chmod=644 ./prisma /prisma
+COPY --chown=root:root --chmod=644 ./package.json /package.json
 
 RUN npm install --force
 
