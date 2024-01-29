@@ -61,4 +61,26 @@ describe('MercadoPagoProvider', () => {
       );
     });
   });
+
+  describe('getTransaction', () => {
+    it('should return a transaction object on successful retrieval', async () => {
+      const mockResponse = {
+        id: 'mockTransactionId',
+      } as any;
+      mockPayment.get.mockResolvedValue(mockResponse);
+
+      const result = await mercadoPagoProvider.getTransaction('mockTransactionId');
+
+      expect(result).toEqual(mockResponse);
+    });
+
+    it('should throw InternalServerErrorException on transaction retrieval error', async () => {
+      const mockError = new Error('Mock retrieval error');
+      mockPayment.get.mockRejectedValue(mockError);
+
+      await expect(mercadoPagoProvider.getTransaction('mockTransactionId')).rejects.toThrowError(
+        new InternalServerErrorException(mockError.message)
+      );
+    });
+  })
 });

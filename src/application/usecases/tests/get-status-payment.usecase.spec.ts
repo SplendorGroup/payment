@@ -27,13 +27,13 @@ describe('GetStatusPaymentUseCase', () => {
         id: orderId,
         payment_id: paymentId,
         items: [],
-      });
+      } as any);
 
       mockPaymentContract.getTransaction.mockResolvedValue({
         id: paymentId,
         order_id: orderId,
         status: 'APPROVED',
-      });
+      } as any);
 
       const result = await getStatusPaymentUseCase.execute(orderId);
 
@@ -60,7 +60,7 @@ describe('GetStatusPaymentUseCase', () => {
         id: orderId,
         payment_id: 'nonexistent_payment_id',
         items: [],
-      });
+      } as any);
 
       mockPaymentContract.getTransaction.mockRejectedValue(
         new Error('payment status is not found'),

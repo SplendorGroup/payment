@@ -88,10 +88,10 @@ describe('ProcessPaymentUseCase', () => {
             ticket_url: 'sample_ticket_url',
           },
         },
-      };
+      } as any;
 
-      mockOrderPrisma.create.mockResolvedValue(mockOrderData);
-      mockItemPrisma.createMany.mockResolvedValue(mockOrderData.items);
+      mockOrderPrisma.create.mockResolvedValue(mockOrderData as any);
+      mockItemPrisma.createMany.mockResolvedValue(mockOrderData.items as any);
       mockPaymentContract.process.mockResolvedValue(mockPaymentData);
       mockOrderPrisma.update.mockResolvedValue(null);
 

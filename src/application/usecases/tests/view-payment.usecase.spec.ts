@@ -2,7 +2,6 @@ import { IPrisma } from '@/domain/contracts/prisma.contract';
 import { PaymentContract } from '@/domain/contracts/payment.contract';
 import { MockProxy, mock } from 'jest-mock-extended';
 import { ViewPaymentUseCase } from '../view-payment.usecase';
-import { PaymentMapper } from '../../../domain/mappers/payment.mapper';
 
 describe('ViewPaymentUseCase', () => {
   let viewPaymentUseCase: ViewPaymentUseCase;
@@ -49,7 +48,7 @@ describe('ViewPaymentUseCase', () => {
             updated_at: new Date(),
           },
         ],
-      });
+      } as any);
 
       mockPaymentContract.getTransaction.mockResolvedValue({
         id: 123, // Replace with the appropriate mock data
@@ -160,7 +159,7 @@ describe('ViewPaymentUseCase', () => {
         id: orderId,
         payment_id: 'nonexistent_payment_id',
         items: [],
-      });
+      } as any);
 
       mockPaymentContract.getTransaction.mockRejectedValue(
         new Error(`Payment details not found for order with ID ${orderId}.`),
@@ -169,7 +168,6 @@ describe('ViewPaymentUseCase', () => {
       await expect(viewPaymentUseCase.execute(orderId)).rejects.toThrow(
         `Payment details not found for order with ID ${orderId}.`,
       );
-      // Add additional assertions based on your error handling logic
     });
   });
 });
