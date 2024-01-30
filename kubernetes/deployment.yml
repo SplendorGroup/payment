@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: payment
-          image: gfrancodev/payment:latest
+          image: rickwalking/payment:latest
           ports:
             - containerPort: 3000  
           env:

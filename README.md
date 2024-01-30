@@ -25,6 +25,14 @@ Para solucionar o problema, a lanchonete irá investir em um sistema de autoaten
   - [Repositório do serviço de pedido](https://github.com/fiap-lanchonete/projeto-lanchonete-pedido)
   - [Repositório do serviço de produção](https://github.com/fiap-lanchonete/projeto-lanchonete-producao)
 
+## SONAR
+
+![Sonar](https://i.imgur.com/yBf7jI7.png)
+
+O SonarQube será integrado ao pipeline de Integração Contínua (CI) para garantir a qualidade do código e a cobertura de testes. A cada novo commit no repositório, o pipeline será acionado, realizando automaticamente a análise do código com o SonarQube. Esta análise inclui a verificação de bugs, vulnerabilidades de segurança, dívida técnica e, claro, a cobertura de testes.
+
+Para garantir um padrão elevado de qualidade, configuraremos o SonarQube para falhar a build caso a cobertura de testes seja inferior a 80%. Isso significa que, se o código submetido não atender a esse critério, a equipe será notificada para fazer as devidas correções antes que o código possa ser integrado à base principal.
+
 ## BANCO DE DADOS
 
 Para esta fase, foram utilizados os seguintes bancos de dados:
@@ -124,13 +132,26 @@ A arquitetura dessa API segue os princípios de Arquitetura Hexagonal (Ports and
 
   * Esquema de Domain Driven Design (DDD) no [Miro](https://miro.com/welcomeonboard/TG9pRTJMU1BNb2d4WUZvdE9PVHd1cEZudmpaczNhdDNMOVVmeDE0S0VOZkVDSmFDSG5uaU0waUZzdFV5Q1h5aXwzNDU4NzY0NTU1MDkxMDI0MTAxfDI=?share_link_id=171801921364)
 
+## KUBERNETES E DEPLOY
+
+Este projeto utiliza Kubernetes para orquestrar os serviços de Cadastro, Pagamento, Pedido e Produção. O processo de deploy é realizado através pipeline de Integração Contínua (CI) que é ativada sempre que um novo código é enviado para a branch principal do repositório.
+
+A pipeline de CI realiza as seguintes etapas:
+
+- Verificação do código: O código é verificado para garantir que não haja erros de sintaxe ou problemas de estilo de código.
+- Construção da imagem Docker: Uma nova imagem Docker é construída para cada serviço (Cadastro, Pagamento, Pedido e Produção). Esta imagem contém tudo o que o serviço precisa para ser executado, incluindo o código do serviço e todas as suas dependências.
+- Push da imagem para Docker Hub: A imagem Docker construída é enviada para um repositório de imagens Docker.
+- Atualização do Kubernetes: O Kubernetes é informado sobre a nova imagem Docker. Ele então atualiza os serviços em execução para usar a nova imagem. Isso é feito de maneira a minimizar o tempo de inatividade do serviço.
+
+Este processo garante que o código mais recente esteja sempre em execução nos serviços e que qualquer problema seja detectado e corrigido o mais rápido possível.
+
 ## PROJETOS USANDO DOCKER
 
 Os serviços de Pagamento, Autenticação, Pedido e Produção utilizam o Docker. Por este motivo, será necessária apenas a instalação do Docker, não sendo necessária a instalação manual do projeto. Também não será necessária a instalação manual do banco de dados.
 
 Caso não tenha o Docker instalado, siga as instruções para seu sistema operacional na [documentação oficial do Docker](https://docs.docker.com/get-docker/).
 
-### PARA EXECUTAR EM AMBIENTE DE DESENVOLVIMENTO:
+### PARA EXECUTAR EM AMBIENTE DE DESENVOLVIMENTO
 
 * Clone este repositório em seu computador;
 * Entre no diretório local onde o repositório foi clonado;
@@ -142,6 +163,20 @@ Caso não tenha o Docker instalado, siga as instruções para seu sistema operac
 
 Para desativar os serviços, execute o comando `docker-compose down`.
 
-### Documentação em Swagger:
+## DOCUMENTAÇÃO UTILIZANDO O SWAGGER
 
 Para acessar a documentação do Swagger, inicie o servidor e acesse a rota `/api` no seu navegador. Por exemplo, se o servidor estiver rodando localmente na porta 3000, você pode acessar a documentação do Swagger em `http://localhost:3000/api`.
+
+## EVIDÊNCIAS DO DEPLOY
+A seguir, serão apresentadas algumas imagens como evidências do processo de deploy. Estas imagens demonstram as etapas concluídas com sucesso e garantem que o sistema está configurado e operando conforme esperado. A visualização destas evidências é crucial para a verificação e validação do processo de implantação dos serviços (como foi requisitado no desafio).
+
+### Cluster
+<img src="https://i.imgur.com/BX4bFx4.jpg" />
+
+### Services
+
+<img src="https://i.imgur.com/lwxn3Fu.jpg" />
+
+### K9S logs
+
+<img src="https://i.imgur.com/XmrGkvE.jpg" />

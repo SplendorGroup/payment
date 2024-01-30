@@ -1,26 +1,58 @@
-FROM node:20-alpine
+###################
+# LOCAL
+###################
 
-RUN addgroup -S nonroot \
-    && adduser -S nonroot -G nonroot
+FROM node:18-alpine AS development
 
-USER nonroot
-
+RUN mkdir /app && chown node:node /app
 WORKDIR /app
 
-COPY --chown=root:root --chmod=644 ./src /src
-COPY --chown=root:root --chmod=644 ./prisma /prisma
-COPY --chown=root:root --chmod=644 ./package.json /package.json
+USER node
+COPY --chown=node:node package*.json .
+COPY --chown=node:node prisma ./prisma/
 
-RUN npm install --ignore-scripts --force
+RUN npm ci
 
-RUN npm prune --production
-
-RUN npx prisma generate
-
-RUN npm run build
-
-RUN find /app -type f -exec chmod a-w {} +
+COPY --chown=node:node . .
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start:prod"]
+###################
+# BUILD PARA PRODUCTION
+###################
+
+FROM node:18-alpine AS build
+
+WORKDIR /app
+
+COPY --chown=node:node package*.json ./
+
+COPY --chown=node:node prisma ./prisma/
+
+COPY --chown=node:node --from=development /app/node_modules ./node_modules
+
+COPY --chown=node:node . .
+
+RUN npm run build
+
+ENV NODE_ENV production
+
+RUN npm ci --only=production && npm cache clean --force
+
+RUN npm run prisma:generate
+
+USER node
+
+###################
+# PRODUCTION
+###################
+
+FROM node:18-alpine AS production
+
+COPY --chown=node:node --from=build /app/node_modules ./node_modules
+COPY --chown=node:node --from=build /app/dist ./dist
+COPY --chown=node:node --from=build /app/package*.json ./
+COPY --chown=node:node --from=build /app/prisma ./prisma
+
+
+CMD [ "npm", "run", "start:migrate:prod" ]
