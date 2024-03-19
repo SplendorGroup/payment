@@ -26,6 +26,7 @@ model Order {
 enum Status {
   PENDING
   CONFIRMED
+  CANCELLED
 }
 
 model Item {
