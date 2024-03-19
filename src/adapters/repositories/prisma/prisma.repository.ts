@@ -125,10 +125,13 @@ export class PrismaRepository implements IPrismaRepository {
     }
   }
 
-  async findByIdWithRelations(id: string, relations: any[]): Promise<unknown> {
+  async findByIdWithRelations(
+    id: string,
+    relations: any[],
+  ): Promise<unknown> {
     try {
       const foundRecord = await this.model.findUnique({
-        where: { id },
+        where: { idempotent_key: id },
         include: this.mapRelations(relations),
       });
       return foundRecord;

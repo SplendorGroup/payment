@@ -2,8 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: payment
+  namespace: microservices
 spec:
-  replicas: 1  
+  replicas: 1
   selector:
     matchLabels:
       app: payment
@@ -15,16 +16,43 @@ spec:
       containers:
         - name: payment
           image: rickwalking/payment:latest
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 256Mi
+              cpu: "0.2"
           ports:
-            - containerPort: 3000  
+            - containerPort: 3008
           env:
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
                   name: payment-env
-                  key: DATABASE_URL
+                  key: database_url
             - name: MERCADOPAGO_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: payment-env
-                  key: MERCADOPAGO_ACCESS_TOKEN
+                  key: mercadopago_access_token
+            - name: RMQ_URL
+              valueFrom:
+                secretKeyRef:
+                  name: payment-env
+                  key: rmq_url
+            - name: RMQ_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: payment-env
+                  key: rmq_queue
+            - name: RMQ_QUEUE_DURABLE
+              valueFrom:
+                secretKeyRef:
+                  name: payment-env
+                  key: rmq_queue_durable
+            - name: MERCADOPAGO_NOTIFICATION_URL
+              valueFrom:
+                secretKeyRef:
+                  name: payment-env
+                  key: mercadopago_notification_url

@@ -26,6 +26,7 @@ export class ProcessPaymentUseCase {
     const order = await this.order.create({
       status: 'PENDING',
       value: total,
+      idempotent_key: data.idempotent_key,
     });
 
     const products = items.flatMap((item) => {

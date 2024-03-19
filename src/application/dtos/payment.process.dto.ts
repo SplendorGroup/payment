@@ -34,6 +34,10 @@ export class PaymentProcessDTO {
   email: string;
 
   @ApiProperty()
+  @IsString()
+  idempotent_key: string;
+
+  @ApiProperty()
   @IsEnum(IdentificationType)
   identificationType: IdentificationType;
 

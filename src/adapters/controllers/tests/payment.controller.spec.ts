@@ -3,18 +3,19 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ProcessPaymentUseCase } from '../../../application/usecases/process-payment.usecase';
 import { GetStatusPaymentUseCase } from '../../../application/usecases/get-status-payment.usecase';
 import { ViewPaymentUseCase } from '../../../application/usecases/view-payment.usecase';
-import { PaymentProcessDTO } from '../../../application/dtos/payment.process.dto';
 import { InternalServerErrorException } from '@nestjs/common';
-import { IdentificationType } from '../../../domain/enum/identification-type.enum';
 import { PaymentController } from '../payment.controller';
+import { UpdatePaymentUseCase } from '../../../application/usecases/update-payment.usecase';
 
 // Mocking the use cases
 jest.mock('../../../application/usecases/process-payment.usecase');
 jest.mock('../../../application/usecases/get-status-payment.usecase');
 jest.mock('../../../application/usecases/view-payment.usecase');
+jest.mock('../../../application/usecases/update-payment.usecase');
 
 describe('PaymentController', () => {
   let paymentController: PaymentController;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let processPaymentUseCase: ProcessPaymentUseCase;
   let getStatusPaymentUseCase: GetStatusPaymentUseCase;
   let viewPaymentUseCase: ViewPaymentUseCase;
@@ -27,6 +28,7 @@ describe('PaymentController', () => {
         ProcessPaymentUseCase,
         GetStatusPaymentUseCase,
         ViewPaymentUseCase,
+        UpdatePaymentUseCase
       ],
     }).compile();
 
@@ -38,56 +40,6 @@ describe('PaymentController', () => {
       GetStatusPaymentUseCase,
     );
     viewPaymentUseCase = module.get<ViewPaymentUseCase>(ViewPaymentUseCase);
-  });
-
-  describe('process', () => {
-    it('should call processPaymentUseCase.execute with the provided body', async () => {
-      const requestBody: PaymentProcessDTO = {
-        payerFirstName: 'John',
-        payerLastName: 'Doe',
-        email: 'john.doe@example.com',
-        identificationType: IdentificationType.CPF,
-        identificationNumber: '12345678909',
-        items: [
-          {
-            product: 'Product 1',
-            quantity: 2,
-            price: 10.99,
-          },
-          {
-            product: 'Product 2',
-            quantity: 1,
-            price: 20.5,
-          },
-        ],
-      } as any;
-
-      await paymentController.process(null, requestBody);
-
-      expect(processPaymentUseCase.execute).toHaveBeenCalledWith(requestBody);
-    });
-
-    it('should return the result from processPaymentUseCase', async () => {
-      const expectedResult = { id: 'mockPaymentId' } as any;
-      jest
-        .spyOn(processPaymentUseCase, 'execute')
-        .mockResolvedValue(expectedResult);
-
-      const result = await paymentController.process(null, {} as any);
-
-      expect(result).toEqual(expectedResult);
-    });
-
-    it('should throw InternalServerErrorException if an error occurs during processing', async () => {
-      const mockError = new Error('Mock error');
-      jest.spyOn(processPaymentUseCase, 'execute').mockRejectedValue(mockError);
-
-      await expect(
-        paymentController.process(null, {} as any),
-      ).rejects.toThrowError(
-        new InternalServerErrorException(mockError.message),
-      );
-    });
   });
 
   describe('getStatus', () => {

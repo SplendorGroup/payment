@@ -2,11 +2,16 @@ apiVersion: v1
 kind: Service
 metadata:
   name: payment
+  namespace: microservices
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-east-1:790210691192:certificate/5b5bddf8-d9ce-4020-92c8-8f8d2cb37e9a
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
 spec:
   selector:
     app: payment
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 3000
+      targetPort: 3008
   type: LoadBalancer

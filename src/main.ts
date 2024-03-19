@@ -7,6 +7,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { useContainer } from 'class-validator';
 import * as compression from 'compression';
 import helmet from 'helmet';
+import { Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
   const logger = new Logger(bootstrap.name);
@@ -15,6 +16,17 @@ async function bootstrap() {
     forceCloseConnections: true,
   });
   app.enableCors();
+
+  await app.connectMicroservice({
+    transport: Transport.RMQ,
+    options: {
+      urls: [process.env.RMQ_URL],
+      queue: process.env.RMQ_QUEUE,
+      queueOptions: {
+        durable: true,
+      },
+    },
+  });
 
   const configService = app.get(ConfigService);
 
@@ -25,10 +37,9 @@ async function bootstrap() {
   app.enableShutdownHooks();
 
   const config = new DocumentBuilder()
-    .setTitle('Tranding Platform Backend')
-    .setDescription('Serviço de gerênciamento de contratos.')
+    .setTitle('Lanchonete Pagamentos API')
+    .setDescription('API para a lanchonete.')
     .setVersion('1.0')
-    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('v1/doc', app, document);

@@ -10,6 +10,7 @@ describe('PaymentProcessDTO', () => {
         payerFirstName: 'John',
         payerLastName: 'Doe',
         email: 'john.doe@example.com',
+        idempotent_key: '1234567890',
         identificationType: IdentificationType.CPF,
         identificationNumber: '12345678909',
         items: [
@@ -36,6 +37,7 @@ describe('PaymentProcessDTO', () => {
       const validData = {
         payerFirstName: 'John',
         payerLastName: 'Doe',
+        idempotent_key: '1234567890',
         email: 'john.doe@example.com',
         identificationType: IdentificationType.CPF,
         identificationNumber: '12345678909',

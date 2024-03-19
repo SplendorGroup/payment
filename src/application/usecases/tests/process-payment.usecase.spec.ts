@@ -30,6 +30,7 @@ describe('ProcessPaymentUseCase', () => {
       const paymentProcessData: PaymentProcessDTO = {
         payerFirstName: 'John',
         payerLastName: 'Doe',
+        idempotent_key: '1234567890',
         email: 'john.doe@example.com',
         identificationType: IdentificationType.CPF,
         identificationNumber: '12345678909',
@@ -123,6 +124,7 @@ describe('ProcessPaymentUseCase', () => {
       const paymentProcessData: PaymentProcessDTO = {
         payerFirstName: 'John',
         payerLastName: 'Doe',
+        idempotent_key: '1234567890',
         email: 'john.doe@example.com',
         identificationType: IdentificationType.CPF,
         identificationNumber: '12345678909',

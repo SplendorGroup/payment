@@ -12,15 +12,20 @@ export class ViewPaymentUseCase {
     private readonly payment: PaymentContract,
   ) {}
 
-  async execute(id: string) {
-    const { payment_id, items } = await this.order.findByIdWithRelations(id, [
-      'items',
-    ]);
+  async execute(idempotent_key: string) {
+    const { payment_id, items } = await this.order.findByIdWithRelations(
+      idempotent_key,
+      ['items'],
+    );
 
     const payment = (await this.payment.getTransaction(
       payment_id,
     )) as Payment.ProcessResponse;
 
-    return PaymentMapper.ProcessResponse({ ...payment, order_id: id, items });
+    return PaymentMapper.ProcessResponse({
+      ...payment,
+      order_id: idempotent_key,
+      items,
+    });
   }
 }

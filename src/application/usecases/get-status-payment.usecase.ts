@@ -12,15 +12,19 @@ export class GetStatusPaymentUseCase {
     private readonly payment: PaymentContract,
   ) {}
 
-  async execute(id: string) {
-    const { payment_id } = await this.order.findByIdWithRelations(id, [
-      'items',
-    ]);
+  async execute(idempotent_key: string) {
+    const { payment_id } = await this.order.findByIdWithRelations(
+      idempotent_key,
+      ['items'],
+    );
 
     const payment = (await this.payment.getTransaction(
       payment_id,
     )) as Payment.ProcessResponse;
 
-    return PaymentMapper.GetStatusResponse({ ...payment, order_id: id });
+    return PaymentMapper.GetStatusResponse({
+      ...payment,
+      order_id: idempotent_key,
+    });
   }
 }
