@@ -13,6 +13,7 @@ spec:
       labels:
         app: payment
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: payment
           image: rickwalking/payment:latest

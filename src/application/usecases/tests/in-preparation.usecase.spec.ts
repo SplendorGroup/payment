@@ -3,6 +3,7 @@ import { IPrisma } from '../../../domain/contracts/prisma.contract';
 import { ClientProxy } from '@nestjs/microservices';
 import { MockProxy, mock } from 'jest-mock-extended';
 import { Status } from '@prisma/client';
+import { of } from 'rxjs';
 
 describe('InPreparationUseCase', () => {
   let inPreparationUseCase: InPreparationUseCase;
@@ -30,7 +31,7 @@ describe('InPreparationUseCase', () => {
 
       await expect(
         inPreparationUseCase.execute(mockedIdempotent_key, mockedPaymentId),
-      ).rejects.toThrowError('Order not found');
+      ).rejects.toThrow('Order not found');
     });
 
     it('should emit event to Producao service', async () => {
@@ -40,13 +41,18 @@ describe('InPreparationUseCase', () => {
         id: '1',
         status: 'CONFIRMED' as Status,
         idempotent_key: '1',
-        payment_id: '123',
+        payment_id: '1',
         value: 12,
         created_at: new Date(),
         updated_at: new Date(),
       };
       mockOrderPrisma.findOne.mockResolvedValue(mockedOrder);
-      inPreparationUseCase.execute(mockedIdempotent_key, mockedPaymentId);
+
+      jest.spyOn(mockClientProxy, 'emit').mockReturnValue(of({
+        message: 'Success',
+      }));
+
+      await inPreparationUseCase.execute(mockedIdempotent_key, mockedPaymentId);
 
       expect(mockClientProxy.emit).toHaveBeenCalledWith(
         'in_preparation',
