@@ -2,32 +2,29 @@
 # LOCAL
 ###################
 
-FROM node:18-alpine AS development
+FROM node:21-alpine AS development
 
 RUN mkdir /app && chown node:node /app
 WORKDIR /app
 
 USER node
 COPY --chown=node:node package*.json .
-COPY --chown=node:node prisma ./prisma/
 
 RUN npm ci
 
 COPY --chown=node:node . .
 
-EXPOSE 3000
+EXPOSE 3000 52500
 
 ###################
 # BUILD PARA PRODUCTION
 ###################
 
-FROM node:18-alpine AS build
+FROM node:21-alpine AS build
 
 WORKDIR /app
 
 COPY --chown=node:node package*.json ./
-
-COPY --chown=node:node prisma ./prisma/
 
 COPY --chown=node:node --from=development /app/node_modules ./node_modules
 
@@ -39,20 +36,23 @@ ENV NODE_ENV production
 
 RUN npm ci --only=production && npm cache clean --force
 
-RUN npm run prisma:generate
-
 USER node
 
 ###################
 # PRODUCTION
 ###################
 
-FROM node:18-alpine AS production
+FROM node:21-alpine AS production
+
+WORKDIR /app
 
 COPY --chown=node:node --from=build /app/node_modules ./node_modules
 COPY --chown=node:node --from=build /app/dist ./dist
 COPY --chown=node:node --from=build /app/package*.json ./
-COPY --chown=node:node --from=build /app/prisma ./prisma
+COPY --chown=node:node --from=build /app/entrypoint.sh /entrypoint.sh
 
+RUN chmod +x /entrypoint.sh
+USER node
 
-CMD [ "npm", "run", "start:migrate:prod" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
+CMD ["node", "dist/src/main"]

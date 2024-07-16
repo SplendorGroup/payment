@@ -9,9 +9,15 @@ import { ViewPaymentUseCase } from './application/usecases/view-payment.usecase'
 import { UpdatePaymentUseCase } from './application/usecases/update-payment.usecase';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 import { InPreparationUseCase } from '@/application/usecases/in-preparation.usecase';
+import { ConfigModule } from '@nestjs/config';
+import { ProcessPaymentWithCardUseCase } from './application/usecases/process-payment-with-card.usecase';
 
 @Module({
-  imports: [CoreModule, ProvidersModule, RepositoryModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    CoreModule, ProvidersModule, RepositoryModule],
   controllers: [PaymentController],
   providers: [
     ProcessPaymentUseCase,
@@ -19,6 +25,7 @@ import { InPreparationUseCase } from '@/application/usecases/in-preparation.usec
     ViewPaymentUseCase,
     UpdatePaymentUseCase,
     InPreparationUseCase,
+    ProcessPaymentWithCardUseCase,
     {
       provide: 'RMQ_CLIENT',
       useFactory: () => {

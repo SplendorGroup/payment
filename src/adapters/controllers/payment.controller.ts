@@ -7,6 +7,8 @@ import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
 import { PaymentUpdateDTO } from '../../application/dtos/payment.update.dto';
 import { UpdatePaymentUseCase } from '../../application/usecases/update-payment.usecase';
 import { ApiTags, ApiOperation, ApiBody } from '@nestjs/swagger';
+import { ProcessPaymentWithCardUseCase } from '@/application/usecases/process-payment-with-card.usecase';
+import { PaymentProcessWithCreditCardTO } from '@/application/dtos/payment-with-card.dto';
 
 @ApiTags('Payment')
 @Controller('v1/payment')
@@ -16,6 +18,7 @@ export class PaymentController {
     private readonly getStatusPaymentUseCase: GetStatusPaymentUseCase,
     private readonly viewPaymentUseCase: ViewPaymentUseCase,
     private readonly updatePaymentUseCase: UpdatePaymentUseCase,
+    private readonly processPaymentCardUseCase: ProcessPaymentWithCardUseCase
   ) {}
 
   @MessagePattern('start_payment')
@@ -24,10 +27,23 @@ export class PaymentController {
     return await this.processPaymentUseCase.execute(data);
   }
 
+  @Post('process')
+  @ApiOperation({ summary: 'Payment process' })
+  async processPayment(@Body() data: PaymentProcessDTO) {
+    return await this.processPaymentUseCase.execute(data);
+  }
+
+  @Post('process/card')
+  @ApiOperation({ summary: 'Payment process with card' })
+  async processPaymentCard(@Body() data: PaymentProcessWithCreditCardTO) {
+    return await this.processPaymentCardUseCase.execute(data);
+  }
+
   @Post('webhook/event')
   @ApiOperation({ summary: 'Receive webhook event' })
   @ApiBody({ type: PaymentUpdateDTO })
-  async receiveWebhookEvent(@Req() _req, @Body() data: PaymentUpdateDTO) {
+  async receiveWebhookEvent(@Req() _req, @Body() data) {
+    console.log(data)
     return await this.updatePaymentUseCase.execute(data);
   }
 

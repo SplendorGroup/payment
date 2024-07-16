@@ -39,6 +39,32 @@ export class MercadoPagoProvider implements PaymentContract {
     }
   }
 
+
+  async processCard(body: Payment.ProcessCardRequest) {
+    try {
+      const payload = {
+        transaction_amount: Number(body.transaction_amount),
+        token: body.token,
+        installments: body.installments,
+        payment_method_id: body.payment_method_id,
+        description: body.description,
+        payer: {
+          email: body.payer.email,
+          identification: {
+            type: body.payer.identification.type,
+            number: body.payer.identification.number,
+          },
+        },
+      };
+
+      return await this.payment.create({
+        body: payload,
+      });
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
+  }
+
   async getTransaction(id) {
     try {
       return await this.payment.get({ id });

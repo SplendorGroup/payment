@@ -1,8 +1,8 @@
 import { MockProxy, mock } from 'jest-mock-extended';
-import { UpdatePaymentUseCase } from '../../../application/usecases/update-payment.usecase';
+import { UpdatePaymentUseCase } from '../update-payment.usecase';
 import { IPrisma } from '../../../domain/contracts/prisma.contract';
 import { PaymentContract } from '../../../domain/contracts/payment.contract';
-import { InPreparationUseCase } from '../../usecases/in-preparation.usecase';
+import { InPreparationUseCase } from '../in-preparation.usecase';
 import { ClientProxy } from '@nestjs/microservices';
 import { HttpStatus } from '@nestjs/common';
 import { PaymentValuesObject } from '../../../domain/values-object/payment.values-object';

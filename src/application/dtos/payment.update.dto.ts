@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsBoolean, IsNumber, IsObject, IsString } from "class-validator";
+import { IsBoolean, IsDateString, IsNumber, IsObject, IsString } from "class-validator";
 
 export class PaymentUpdateDTO {
   @ApiProperty()
@@ -17,11 +17,11 @@ export class PaymentUpdateDTO {
   };
 
   @ApiProperty()
-  @IsString()
+  @IsDateString()
   date_created: string;
 
   @ApiProperty()
-  @IsNumber()
+  @IsString()
   id: number;
 
   @ApiProperty()
@@ -33,7 +33,7 @@ export class PaymentUpdateDTO {
   type: string;
 
   @ApiProperty()
-  @IsString()
+  @IsNumber()
   user_id: string;
 }
 

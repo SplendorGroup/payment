@@ -1,4 +1,4 @@
-import { PaymentValuesObject } from '../../../domain/values-object/payment.values-object';
+import { PaymentValuesObject } from '../../values-object/payment.values-object';
 import { PaymentMapper } from '../payment.mapper';
 
 describe('PaymentMapper', () => {

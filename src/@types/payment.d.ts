@@ -26,6 +26,27 @@ declare namespace Payment {
     identificationNumber: string;
   }
 
+  export interface ProcessCardRequest {
+    token: string
+    issuer_id: string
+    payment_method_id: string
+    transaction_amount: number
+    description: string;
+    installments: number
+    payer: Payer
+    idempotent_key: string
+  }
+  
+  export interface Payer {
+    email: string
+    identification: Identification
+  }
+  
+  export interface Identification {
+    type: string
+    number: string
+  }
+
   interface ProcessResponse {
     id: number;
     date_created: string;

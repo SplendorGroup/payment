@@ -25,9 +25,7 @@ export class PaymentMapper {
       currency_id,
       description,
       transaction_amount,
-      point_of_interaction: {
-        transaction_data: { qr_code, qr_code_base64, ticket_url },
-      },
+      point_of_interaction,
     } = data;
     const producs = items.flatMap((item) => {
       delete item.order_id;
@@ -46,11 +44,12 @@ export class PaymentMapper {
       description,
       transaction_amount: PaymentValuesObject.Money(transaction_amount),
       items: producs,
-      payment_url: ticket_url,
-      qr_code,
-      qr_code_base64,
+      payment_url: point_of_interaction?.transaction_data?.ticket_url ?? null,
+      qr_code: point_of_interaction?.transaction_data?.qr_code ?? null,
+      qr_code_base64: point_of_interaction?.transaction_data?.qr_code_base64 ?? null,
     };
   }
+
 
   static GetStatusResponse(
     data: Payment.ProcessResponse & {

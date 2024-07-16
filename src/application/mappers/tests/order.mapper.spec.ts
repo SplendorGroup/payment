@@ -1,5 +1,5 @@
 import { Status } from "@prisma/client";
-import { OrderMapper } from "../../../application/mappers/order.mapper";
+import { OrderMapper } from "../order.mapper";
 
 describe('OrderMapper', () => {
   it('should transform object using the toInPreparation function', () => {

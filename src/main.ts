@@ -7,26 +7,16 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { useContainer } from 'class-validator';
 import * as compression from 'compression';
 import helmet from 'helmet';
-import { Transport } from '@nestjs/microservices';
+
 
 async function bootstrap() {
   const logger = new Logger(bootstrap.name);
   const app = await NestFactory.create(AppModule, {
     snapshot: true,
+    cors: true,
     forceCloseConnections: true,
   });
   app.enableCors();
-
-  await app.connectMicroservice({
-    transport: Transport.RMQ,
-    options: {
-      urls: [process.env.RMQ_URL],
-      queue: process.env.RMQ_QUEUE,
-      queueOptions: {
-        durable: true,
-      },
-    },
-  });
 
   const configService = app.get(ConfigService);
 
